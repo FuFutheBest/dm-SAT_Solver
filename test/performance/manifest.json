@@ -1,0 +1,42 @@
+[
+  {
+    "file": "public-01.cnf",
+    "expected": "SAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-02.cnf",
+    "expected": "SAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-03.cnf",
+    "expected": "SAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-04.cnf",
+    "expected": "UNSAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-05.cnf",
+    "expected": "UNSAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-06.cnf",
+    "expected": "SAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-07.cnf",
+    "expected": "UNSAT",
+    "seconds": 15
+  },
+  {
+    "file": "public-08.cnf",
+    "expected": "UNSAT",
+    "seconds": 15
+  }
+]

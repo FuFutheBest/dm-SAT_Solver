@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "course/REPLACE_MODEL_ID",
+  "provider": {
+    "course": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Course Model Provider",
+      "options": {
+        "baseURL": "https://api.example.invalid/v1",
+        "apiKey": "{file:~/.config/opencode/cdm-api-key}"
+      },
+      "models": {
+        "REPLACE_MODEL_ID": {
+          "name": "Course Model"
+        }
+      }
+    }
+  }
+}
