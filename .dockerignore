@@ -1,0 +1,6 @@
+build/
+makefile
+handin.zip
+.git/
+__pycache__/
+*.log
