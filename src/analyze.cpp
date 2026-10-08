@@ -744,10 +744,20 @@ void Internal::eagerly_subsume_recently_learned_clauses (Clause *c) {
       continue;
     if (!d->redundant)
       continue;
+    // A shorter clause cannot contain every literal of 'c'.  Reject it
+    // before scanning literals (the attempt still counts toward the limit).
+    if (d->size < c->size)
+      continue;
     int needed = c->size;
+    int remaining = d->size;
     for (auto &lit : *d) {
-      if (marked (lit) <= 0)
+      if (marked (lit) <= 0) {
+        // Even matching every remaining literal would not suffice.
+        if (--remaining < needed)
+          break;
         continue;
+      }
+      --remaining;
       if (!--needed)
         break;
     }

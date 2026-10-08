@@ -979,6 +979,10 @@ void App::init () {
   // paying for candidate matching on long clauses.
   solver->set ("factor", 1);
   solver->set ("factorsize", 2);
+  // Retain vivification, but spend a smaller fraction of search work on it.
+  // A large strengthening budget can cost more than the propagation it
+  // saves.
+  solver->set ("vivifyeffort", 20);
   Signal::set (this);
 }
 

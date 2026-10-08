@@ -118,7 +118,9 @@ unsigned Reap::pop () {
 
 void Reap::clear () {
   assert (max_bucket <= 32);
-  for (unsigned i = 0; i < 33; i++)
+  // Push/pop maintain an enclosing range for all nonempty buckets.  Empty
+  // reaps can have min_bucket > max_bucket, requiring no bucket stores.
+  for (unsigned i = min_bucket; i <= max_bucket; i++)
     buckets[i].clear ();
   num_elements = 0;
   last_deleted = 0;
