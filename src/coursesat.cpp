@@ -972,6 +972,13 @@ void App::init () {
 
   CourseSAT::Options::reportdefault = 1;
   solver = new Solver ();
+  // DIMACS declares all variables before solving, so extension variables
+  // from BVA are safe here.  Leave library defaults unchanged: incremental
+  // clients may introduce additional variables without reserving them.
+  // Binary-only factoring compresses repeated implication patterns without
+  // paying for candidate matching on long clauses.
+  solver->set ("factor", 1);
+  solver->set ("factorsize", 2);
   Signal::set (this);
 }
 

@@ -4,6 +4,7 @@
 #include "util.hpp" // Alphabetically after 'heap.hpp'.
 
 #include <cassert>
+#include <climits>
 
 namespace CourseSAT {
 
@@ -71,25 +72,40 @@ template <class C> class heap {
   // Bubble up an element as far as necessary.
   //
   void up (unsigned e) {
-    unsigned p;
-    while (has_parent (e) && less ((p = parent (e)), e))
-      exchange (p, e);
+    unsigned i = pos[e];
+    while (i) {
+      const unsigned p = (i - 1) / 2;
+      const unsigned parent = array[p];
+      if (!less (parent, e))
+        break;
+      array[i] = parent;
+      pos[parent] = i;
+      i = p;
+    }
+    array[i] = e;
+    pos[e] = i;
   }
 
   // Bubble down an element as far as necessary.
   //
   void down (unsigned e) {
-    while (has_left (e)) {
-      unsigned c = left (e);
-      if (has_right (e)) {
-        unsigned r = right (e);
-        if (less (c, r))
-          c = r;
-      }
+    // Move a hole rather than swapping at each level.  Keep the original
+    // left-child tie breaking, so score ties do not change search order.
+    size_t i = pos[e];
+    const size_t n = array.size ();
+    while (i < n / 2) {
+      size_t child = 2 * i + 1;
+      if (child + 1 < n && less (array[child], array[child + 1]))
+        child++;
+      const unsigned c = array[child];
       if (!less (e, c))
         break;
-      exchange (e, c);
+      array[i] = c;
+      pos[c] = (unsigned) i;
+      i = child;
     }
+    array[i] = e;
+    pos[e] = (unsigned) i;
   }
 
   // Very expensive checker for the main 'heap' invariant.  Can be enabled
